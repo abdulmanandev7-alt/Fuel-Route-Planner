@@ -1,0 +1,117 @@
+{
+  "info": {
+    "name": "Fuel Route Planner",
+    "description": "Plan a US road trip with cost-optimal fuel stops.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "base_url", "value": "http://127.0.0.1:8000"}
+  ],
+  "item": [
+    {
+      "name": "Cross-country trip (New York to Los Angeles)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=New York, NY&finish=Los Angeles, CA",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "New York, NY"},
+            {"key": "finish", "value": "Los Angeles, CA"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Mid-length trip (Chicago to Dallas)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Chicago, IL&finish=Dallas, TX",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Chicago, IL"},
+            {"key": "finish", "value": "Dallas, TX"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Short trip, no refuel needed (Amarillo to Albuquerque)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Amarillo, TX&finish=Albuquerque, NM",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Amarillo, TX"},
+            {"key": "finish", "value": "Albuquerque, NM"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Coordinates as input",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=47.6062,-122.3321&finish=25.7617,-80.1918",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "47.6062,-122.3321"},
+            {"key": "finish", "value": "25.7617,-80.1918"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST with JSON body",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": \"Denver International Airport\",\n  \"finish\": \"Salt Lake City, UT\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/route/",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""]
+        }
+      }
+    },
+    {
+      "name": "Error: unknown location (422)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Nonexistentville&finish=Los Angeles, CA",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Nonexistentville"},
+            {"key": "finish", "value": "Los Angeles, CA"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Error: missing parameter (400)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Chicago, IL",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Chicago, IL"}
+          ]
+        }
+      }
+    }
+  ]
+}
